@@ -28,3 +28,20 @@ export function safeEqual(a: string, b: string): boolean {
   for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return diff === 0;
 }
+
+/**
+ * Where to send someone after they sign in: only a path on this app, never another site.
+ * Browsers read "/\\evil.com" and "/\t/evil.com" as "//evil.com", so checking that the text starts
+ * with "/" isn't enough. Parse it the way a browser would and keep it only if it stays on this app.
+ */
+export function safeNextPath(next: unknown): string {
+  if (typeof next !== "string" || !next.startsWith("/")) return "/";
+  const base = "http://app.invalid";
+  try {
+    const url = new URL(next, base);
+    if (url.origin !== base) return "/";
+    return url.pathname + url.search + url.hash;
+  } catch {
+    return "/";
+  }
+}

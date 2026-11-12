@@ -1,6 +1,6 @@
 ---
 name: fix-what-broke
-description: Diagnoses and fixes errors such as failed Vercel builds or broken pages: reads the real error, finds the cause, makes the smallest fix, explains it simply. Use when something breaks.
+description: Diagnoses and fixes errors, like failed Vercel builds or broken pages: reads the real error, finds the cause, makes the smallest fix, explains it simply. Use when something breaks.
 ---
 
 # Fix what broke

@@ -8,7 +8,7 @@ import { z } from "zod";
 import { STATUSES } from "@/app.config";
 import { getDb } from "@/db";
 import { items } from "@/db/schema";
-import { appPassword, safeEqual, SESSION_COOKIE, SESSION_DAYS, sessionToken } from "@/lib/session";
+import { appPassword, safeEqual, safeNextPath, SESSION_COOKIE, SESSION_DAYS, sessionToken } from "@/lib/session";
 
 const statusIds = STATUSES.map((s) => s.id) as [string, ...string[]];
 
@@ -50,8 +50,7 @@ function fields(formData: FormData) {
 export async function signIn(formData: FormData) {
   const password = appPassword();
   const typed = String(formData.get("password") ?? "");
-  const next = String(formData.get("next") ?? "/");
-  const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/";
+  const safeNext = safeNextPath(formData.get("next"));
 
   if (!password) redirect("/setup");
   if (!safeEqual(await sessionToken(typed), await sessionToken(password))) {
