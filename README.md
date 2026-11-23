@@ -10,8 +10,9 @@ From the **it takes AI Build Pack**. Start with the guide, `01 START HERE.pdf`.
 |---|---|
 | `DATABASE_URL` | Set automatically when you connect Neon in Vercel → Storage |
 | `APP_PASSWORD` | The password your team types to get in |
+| `ANTHROPIC_API_KEY` | Optional. Switches on the AI summary button. A key from platform.claude.com, billed per use |
 
-Until both are set, the app shows a setup page that says what to click.
+Until the first two are set, the app shows a setup page that says what to click.
 
 ## For Claude Code
 

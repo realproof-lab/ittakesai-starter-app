@@ -13,7 +13,7 @@ The owner of this repo is **not a programmer**. They are building a tool for the
 
 ## What this app is
 
-A small web app that started as a **team tracker**: a list of items with title, status, owner, due date and notes, behind a shared team password. The owner will reshape it into their own tool (an onboarding checklist, a content approval queue, a candidate pipeline...). `app.config.ts` holds the name, wording and statuses.
+A small web app that started as a **team tracker**: a list of items with title, status, owner, due date and notes, behind a shared team password. One AI feature is built in: a "Summarize notes" button on the edit page, switched on by `ANTHROPIC_API_KEY`. The owner will reshape it into their own tool (an onboarding checklist, a content approval queue, a candidate pipeline...). `app.config.ts` holds the name, wording and statuses.
 
 ## Stack
 
@@ -28,12 +28,14 @@ A small web app that started as a **team tracker**: a list of items with title, 
 | Path | What it is |
 |---|---|
 | `app.config.ts` | App name, wording, statuses. Change these first when reshaping the app |
+| `lib/ai.ts` | AI features: the model name and `askClaude()`. Off until `ANTHROPIC_API_KEY` is set |
 | `db/schema.ts` | Database tables |
 | `drizzle/` | Migrations, generated from the schema. Never edit by hand |
 | `scripts/migrate.mjs` | Runs migrations before each build (skips if no database is connected) |
 | `app/page.tsx` | The main list, filters and add form |
 | `app/items/[id]/page.tsx` | Edit page |
-| `app/actions.ts` | Server actions: sign in/out, add, update, delete |
+| `app/actions.ts` | Server actions: sign in/out, add, update, delete, summarize notes |
+| `components/ai-summary.tsx` | The "Summarize notes" button on the edit page |
 | `proxy.ts`, `lib/session.ts` | The team password lock |
 | `app/login`, `app/setup` | Sign-in page and the setup help page |
 
@@ -57,4 +59,6 @@ Use them; they hold the step-by-step for the common jobs:
 | `change-the-data` | Adding, renaming or removing fields, statuses or lists |
 | `fix-what-broke` | An error, a failed deploy, or "it doesn't work" |
 | `ship-it` | Getting a change live and checking it |
+| `add-ai` | Any feature where the app itself uses AI: summarize, sort, draft, pull out details |
 | `add-payments` | Taking money with Stripe |
+| `one-step-at-a-time` | The owner has to click or type something themselves in GitHub, Vercel, Neon, the Claude console or Stripe, or asks to go one step at a time |

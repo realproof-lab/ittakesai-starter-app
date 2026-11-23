@@ -3,9 +3,11 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { updateItem } from "@/app/actions";
 import { APP, STATUSES } from "@/app.config";
+import { AiSummary } from "@/components/ai-summary";
 import { DeleteButton } from "@/components/delete-button";
 import { getDb } from "@/db";
 import { items } from "@/db/schema";
+import { aiEnabled } from "@/lib/ai";
 
 export const dynamic = "force-dynamic";
 
@@ -74,6 +76,15 @@ export default async function ItemPage(props: PageProps<"/items/[id]">) {
           <DeleteButton id={item.id} label={item.title} />
         </div>
       </form>
+
+      {aiEnabled() ? (
+        <AiSummary id={item.id} hasNotes={Boolean(item.notes?.trim())} />
+      ) : (
+        <p className="text-sm text-stone-500">
+          AI summary is off. To switch it on, add ANTHROPIC_API_KEY in Vercel → Settings → Environment Variables, then
+          redeploy.
+        </p>
+      )}
     </main>
   );
 }
